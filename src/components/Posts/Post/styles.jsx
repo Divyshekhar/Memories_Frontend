@@ -9,11 +9,12 @@ import styled from '@emotion/styled';
 export const Media = styled('div')(({ image }) => ({
   height: 0,
   paddingTop: '56.25%',  // Aspect ratio for the media container (16:9)
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  backgroundColor: 'rgba(0, 0, 0, 0.25)',
   backgroundBlendMode: 'darken',
   backgroundImage: `url(${image})`,  // Set background image dynamically
   backgroundSize: 'contain',  // Ensure the image covers the container
   backgroundPosition: 'center',  // Center the image
+  // backgroundRepeat: 'no-repeat' // for no repeating things
 }));
 
 export const Border = styled('div')({
