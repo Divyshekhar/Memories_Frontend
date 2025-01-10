@@ -16,8 +16,12 @@ import {
   Title,
   Card as StyledCard,
 } from './styles';
+import { useDispatch } from 'react-redux';
+import { deletePost, likePost } from '../../../actions/posts';
 
-const Post = ({ post }) => {
+const Post = ({ post, setCurrentId }) => {
+  const dispatch = useDispatch()
+  // the id is stored in data base  by default as _id as that is the default value provided by the database
   return (
     <StyledCard>
       <Media image={post.selectedFile} title={post.title} />
@@ -26,7 +30,7 @@ const Post = ({ post }) => {
         <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
       </Overlay>
       <Overlay2>
-        <Button style={{ color: 'white' }} size="small" onClick={() => { }}>
+        <Button style={{ color: 'white' }} size="small" onClick={() => { setCurrentId(post._id) }}>
           <MoreHorizIcon fontSize="default" />
         </Button>
       </Overlay2>
@@ -37,15 +41,16 @@ const Post = ({ post }) => {
       </Details>
       <CardContent>
         <Title>
-          <Typography variant="h5" gutterBottom>{post.message}</Typography>
+          <Typography variant="h5" gutterBottom>{post.title}</Typography>
         </Title>
+        <Typography variant='body2' component="p" color="textSecondary">{post.message}</Typography>
       </CardContent>
       <MuiCardActions>
-        <Button size="small" color="primary" onClick={() => { }}>
+        <Button size="small" color="primary" onClick={() => dispatch(likePost(post._id))}>
           <ThumbUpAltIcon fontSize="small" />
-          Like {post.likeCount}
+          &nbsp; Like &nbsp; {post.likeCount}
         </Button>
-        <Button size="small" color="primary" onClick={() => { }}>
+        <Button size="small" color="primary" onClick={() => dispatch(deletePost(post._id))} >
           <DeleteIcon fontSize="small" />
           Delete
         </Button>

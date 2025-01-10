@@ -1,13 +1,20 @@
-const postsReducer = (post = [], action) => {
-    switch (action.type) {
-      case 'FETCH_ALL':
-        return action.payload || []; 
-      case 'CREATE':
-        return [...post, action.payload]; 
-      default:
-        return post;
-    }
-  };
-  //post = state
-  export default postsReducer;
-  
+import { FETCH_ALL, CREATE, DELETE, LIKE, UPDATE } from '../constants/actionTypes'
+
+const postsReducer = (posts = [], action) => {
+  switch (action.type) {
+    case FETCH_ALL:
+      return action.payload || [];
+    case CREATE:
+      return [...posts, action.payload];
+    default:
+      return posts;
+    case UPDATE:
+      return posts.map((post) => post._id == action.payload._id ? action.payload : post);
+    case DELETE:
+      return posts.filter((post) => post.id !== action.payload); // return all the posts but filter out the one with the id which was deleted
+    case LIKE:
+      return posts.map((post) => post._id == action.payload._id ? action.payload : post);
+  }
+};
+//post = state
+export default postsReducer;
